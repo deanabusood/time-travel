@@ -1,13 +1,130 @@
-body {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  padding: 0;
+  border: 0;
+  font-family: "Courier New", Courier, monospace, Verdana, Geneva, Tahoma,
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+::-webkit-scrollbar {
+  display: none;
+}
+
+#header {
+  padding: 50px;
+
+  color: rgb(196, 191, 191);
+  font-weight: 900;
+}
+
+body {
+  background-image: url("./images/time.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 100vw;
+  margin-top: 200px;
+  margin-bottom: 50px;
+}
+
+/* input and button #days, */
+form {
+  display: flex;
+  margin-top: -20px;
+  gap: 10px;
+
+  position: relative;
+}
+
+#months,
+#days,
+#submit-button {
+  width: 7rem;
+  height: 1rem;
+
+  /* padding: 1px; */
+  border-radius: 50px;
+
+  text-align: center;
+  background: rgb(196, 191, 191);
+}
+
+/* everything below the input + search */
+#output {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 50px;
+}
+
+.event-container {
+  position: relative;
+  height: 565px;
+  width: 305px;
+
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  border-radius: 10px;
+
+  background: rgb(196, 191, 191);
+}
+
+.event-container::before {
+  position: absolute;
+  content: "";
+  top: 99%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(232, 219, 219);
+  background-image: linear-gradient(
+    315deg,
+    rgb(248, 248, 248) 0%,
+    rgb(148, 117, 60) 74%
+  );
+  transition: 0.4s;
+}
+
+.event-container:hover:before {
+  top: 50%;
+}
+
+.event-image-container {
+  width: 100%;
+  height: 50%;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-title {
+  font-size: 16px;
+  position: relative;
+  padding: 10px;
+}
+
+.event-text {
+  font-size: 14px;
+  position: relative;
+  padding: 10px;
 }
