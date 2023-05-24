@@ -128,3 +128,46 @@ form {
   position: relative;
   padding: 10px;
 }
+
+/* SAVED */
+
+.saved-event-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: whitesmoke;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+#saved-events {
+  background-color: rgb(202, 176, 126);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+#saved-events h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.saved-event-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+.delete-button {
+  padding: 5px 10px;
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+}

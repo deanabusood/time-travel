@@ -150,10 +150,11 @@ const gatherData = (data) => {
           "thumbnail" in data.events[index].pages[0]
             ? data.events[index].pages[0].thumbnail.source
             : "./images/no-image-found.png",
-        isFavorited: false,
+        isSaved: false,
       };
 
       results.push(event);
+      savedEventsArray.push(event);
     }
   }
 
@@ -178,17 +179,16 @@ const showResults = (results) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
 
-      const confirmationMessage = `Would you like to favorite "${results[i].title}"?`;
+      const confirmationMessage = `Would you like to bookmark "${results[i].title}"?`;
 
-      const shouldFavorite = window.confirm(confirmationMessage);
-      if (shouldFavorite) {
-        results[i].isFavorited = true;
-        console.log("Event favorited:", results[i]);
+      const shouldSave = window.confirm(confirmationMessage);
+      if (shouldSave) {
+        results[i].isSaved = true;
+        console.log("Event saved:", results[i]);
       }
       window.open(results[i].url, "_blank");
-      // keep track of favorites
-      const favoritedEvents = results.filter((event) => event.isFavorited);
-      showFavoritedEvents(favoritedEvents);
+      // keep track of saved events
+      updateSavedEvents(results);
     });
 
     const image = document.createElement("img");
@@ -218,28 +218,61 @@ const showResults = (results) => {
   }
 };
 
-//favorited events
-export const showFavoritedEvents = (favoritedEvents) => {
-  const favoritedEventsContainer = document.querySelector("#favorited-events");
-  favoritedEventsContainer.innerHTML = ""; //clear from duplicating
-  console.log(favoritedEvents);
+//saved events
+let savedEventsArray = [];
 
-  for (let i = 0; i < favoritedEvents.length; i++) {
+export const showSavedEvents = (savedEvents) => {
+  const savedEventsContainer = document.querySelector("#saved-events");
+  savedEventsContainer.innerHTML = "SAVED EVENTS: "; //clear from duplicating
+
+  for (let i = 0; i < savedEvents.length; i++) {
     const container = document.createElement("div");
-    container.classList.add("favorited-event-container");
+    container.classList.add("saved-event-container");
 
     const title = document.createElement("h3");
-    title.classList.add("favorited-event-title");
-    title.innerText = favoritedEvents[i].title;
+    title.classList.add("saved-event-title");
+    title.innerText = savedEvents[i].title;
+
+    if (!title.innerText.includes(savedEvents[i].year)) {
+      title.innerText += " (" + savedEvents[i].year + ")";
+    }
+
+    const link = document.createElement("a");
+    link.href = savedEvents[i].url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.innerText = savedEvents[i].title;
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.open(link.href, "_blank");
+    });
+
+    const deleteButton = document.createElement("button");
+    deleteButton.innerText = "Delete";
+    deleteButton.classList.add("delete-button");
+
+    deleteButton.addEventListener("click", () => {
+      const confirmationMessage = `Are you sure you want to delete "${savedEvents[i].title}"?`;
+
+      const shouldDelete = window.confirm(confirmationMessage);
+      if (shouldDelete) {
+        savedEvents[i].isSaved = false;
+        console.log("Event unsaved:", savedEvents[i]);
+        updateSavedEvents();
+      }
+    });
+
     container.appendChild(title);
+    container.appendChild(deleteButton);
 
-    const text = document.createElement("p");
-    text.classList.add("favorited-event-text");
-    text.innerText = favoritedEvents[i].text;
-    container.appendChild(text);
-
-    favoritedEventsContainer.appendChild(container);
+    savedEventsContainer.appendChild(container);
   }
+};
+
+const updateSavedEvents = () => {
+  const updatedSavedEvents = savedEventsArray.filter((event) => event.isSaved);
+  showSavedEvents(updatedSavedEvents); // Update saved events
 };
 
 //
