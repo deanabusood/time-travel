@@ -237,20 +237,15 @@ export const showSavedEvents = (savedEvents) => {
     title.classList.add("saved-event-title");
     title.innerText = savedEvents[i].title;
 
-    if (!title.innerText.includes(savedEvents[i].year)) {
-      title.innerText += " (" + savedEvents[i].year + ")";
-    }
-
     const link = document.createElement("a");
     link.href = savedEvents[i].url;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.innerText = savedEvents[i].title;
 
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      window.open(link.href, "_blank");
-    });
+    if (!title.innerText.includes(savedEvents[i].year)) {
+      link.innerText += " (" + savedEvents[i].year + ")";
+    }
 
     const deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
@@ -267,7 +262,7 @@ export const showSavedEvents = (savedEvents) => {
       }
     });
 
-    container.appendChild(title);
+    container.appendChild(link);
     container.appendChild(deleteButton);
 
     savedEventsContainer.appendChild(container);
