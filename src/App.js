@@ -19,7 +19,7 @@ function App() {
 
       <form action="">
         <select id="months" name="month" onChange={populateDays}>
-          <option value="" disabled selected>
+          <option value="" disabled defaultValue>
             Month
           </option>
         </select>

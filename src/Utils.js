@@ -7,6 +7,7 @@ export const populateMonths = () => {
   monthInput.innerHTML = "";
 
   const months = [
+    "Month",
     "January",
     "February",
     "March",
@@ -26,6 +27,10 @@ export const populateMonths = () => {
     option.value = index;
     option.textContent = month;
     monthInput.appendChild(option);
+
+    if (month === "Month") {
+      option.disabled = true;
+    }
   });
 };
 
