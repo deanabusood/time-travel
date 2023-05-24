@@ -150,6 +150,7 @@ const gatherData = (data) => {
           "thumbnail" in data.events[index].pages[0]
             ? data.events[index].pages[0].thumbnail.source
             : "./images/no-image-found.png",
+        isFavorited: false,
       };
 
       results.push(event);
@@ -173,6 +174,22 @@ const showResults = (results) => {
     link.href = results[i].url;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const confirmationMessage = `Would you like to favorite "${results[i].title}"?`;
+
+      const shouldFavorite = window.confirm(confirmationMessage);
+      if (shouldFavorite) {
+        results[i].isFavorited = true;
+        console.log("Event favorited:", results[i]);
+      }
+      window.open(results[i].url, "_blank");
+      // keep track of favorites
+      const favoritedEvents = results.filter((event) => event.isFavorited);
+      showFavoritedEvents(favoritedEvents);
+    });
 
     const image = document.createElement("img");
     image.src = results[i].image;
@@ -201,6 +218,31 @@ const showResults = (results) => {
   }
 };
 
+//favorited events
+export const showFavoritedEvents = (favoritedEvents) => {
+  const favoritedEventsContainer = document.querySelector("#favorited-events");
+  favoritedEventsContainer.innerHTML = ""; //clear from duplicating
+  console.log(favoritedEvents);
+
+  for (let i = 0; i < favoritedEvents.length; i++) {
+    const container = document.createElement("div");
+    container.classList.add("favorited-event-container");
+
+    const title = document.createElement("h3");
+    title.classList.add("favorited-event-title");
+    title.innerText = favoritedEvents[i].title;
+    container.appendChild(title);
+
+    const text = document.createElement("p");
+    text.classList.add("favorited-event-text");
+    text.innerText = favoritedEvents[i].text;
+    container.appendChild(text);
+
+    favoritedEventsContainer.appendChild(container);
+  }
+};
+
+//
 const clearOutput = () => {
   const outputContainer = document.querySelector("#output");
   if (outputContainer) {

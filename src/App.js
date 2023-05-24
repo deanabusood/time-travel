@@ -30,6 +30,7 @@ function App() {
         </button>
       </form>
       <div id="output"></div>
+      <div id="favorited-events"></div>
     </div>
   );
 }
