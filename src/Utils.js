@@ -2,6 +2,10 @@ import axios from "axios";
 
 export const populateMonths = () => {
   const monthInput = document.querySelector("#months");
+
+  // Clear existing options
+  monthInput.innerHTML = "";
+
   const months = [
     "January",
     "February",

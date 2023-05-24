@@ -1,12 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 //import timeImage from "./time.jpg";
 import { populateMonths, populateDays, handleSubmit } from "./Utils";
 
 function App() {
+  const [isMonthsPopulated, setIsMonthsPopulated] = useState(false);
+
   useEffect(() => {
-    populateMonths();
-  }, []);
+    if (!isMonthsPopulated) {
+      populateMonths();
+      setIsMonthsPopulated(true);
+    }
+  }, [isMonthsPopulated]);
 
   return (
     <div className="container">
